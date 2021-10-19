@@ -1,15 +1,20 @@
 {
   "name": "static",
   "version": "1.0.0",
-  "description": "",
+  "description": "description",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "npm install",
+    "check": "npm install -g npm-check-updates",
+    "clean": "npm cache clean"
   },
   "author": "",
   "license": "ISC",
+  "repository": {},
   "dependencies": {
     "bootstrap": "^4.6.0",
-    "jquery": "^3.4.1"
-  }
+    "jquery": "^3.6.0",
+    "popper.js": "^1.16.1"
+  },
+  "devDependencies": {}
 }

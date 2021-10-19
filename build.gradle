@@ -2,6 +2,8 @@ plugins {
     id 'org.springframework.boot' version '2.5.5'
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
     id 'java'
+    id "org.siouan.frontend-jdk11"  version "5.3.0"
+    id "org.siouan.frontend" version "3.0.2"
 }
 
 group = 'com.bomb'
@@ -17,6 +19,9 @@ configurations {
 repositories {
     mavenCentral()
 }
+
+
+
 
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
@@ -43,4 +48,20 @@ dependencies {
 
 test {
     useJUnitPlatform()
+}
+
+
+def preinstalledNodeDistributionDirectory = file("${projectDir}/src/main/resources/static/node")
+
+apply plugin: 'org.siouan.frontend-jdk11'
+
+frontend {
+
+    nodeDistributionProvided = false
+    nodeInstallDirectory = file("${project.projectDir}/src/main/resources/static/node")
+    packageJsonDirectory = file("${project.projectDir}/src/main/resources/static")
+    nodeVersion = '14.16.0'
+    assembleScript = 'run build'
+    cleanScript = 'run clean'
+    checkScript = 'run check'
 }
