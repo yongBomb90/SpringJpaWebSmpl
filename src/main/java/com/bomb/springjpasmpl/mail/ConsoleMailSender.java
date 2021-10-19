@@ -1,4 +1,4 @@
-package com.bomb.springjpasmpl;
+package com.bomb.springjpasmpl.mail;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Profile;
