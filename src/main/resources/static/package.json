@@ -4,9 +4,9 @@
   "description": "description",
   "main": "index.js",
   "scripts": {
-    "build": "npm install",
-    "check": "npm install -g npm-check-updates",
-    "clean": "npm cache clean"
+    "build": "echo build",
+    "check": "echo check",
+    "clean": "echo clean"
   },
   "author": "",
   "license": "ISC",
