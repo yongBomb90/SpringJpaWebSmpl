@@ -51,6 +51,7 @@ test {
 }
 
 
+/*
 def preinstalledNodeDistributionDirectory = file("${projectDir}/src/main/resources/static/node")
 
 apply plugin: 'org.siouan.frontend-jdk11'
@@ -64,4 +65,4 @@ frontend {
     assembleScript = 'run build'
     cleanScript = 'run clean'
     checkScript = 'run check'
-}
+}*/
