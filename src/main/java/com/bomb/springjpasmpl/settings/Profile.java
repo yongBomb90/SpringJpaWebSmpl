@@ -2,8 +2,10 @@ package com.bomb.springjpasmpl.settings;
 
 import com.bomb.springjpasmpl.domain.Account;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@NoArgsConstructor
 public class Profile {
 
     private String bio;
