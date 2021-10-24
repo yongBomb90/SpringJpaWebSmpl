@@ -9,8 +9,7 @@ import java.util.UUID;
 @Entity
 @Getter @Setter @EqualsAndHashCode(of = "Id")
 @Builder @AllArgsConstructor @NoArgsConstructor
-public class Account {
-
+public class Account  {
 
     @Id @GeneratedValue
     private Long id;
@@ -71,5 +70,5 @@ public class Account {
     public boolean canSendConfirmEmail() {
         return this.emailCheckTokenGeneratedAt.isBefore(LocalDateTime.now().minusHours(1));
     }
-
 }
+
