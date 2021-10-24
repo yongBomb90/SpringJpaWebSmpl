@@ -1,18 +1,16 @@
 package com.bomb.springjpasmpl.accout;
 
+import com.bomb.springjpasmpl.accout.form.SignUpForm;
+import com.bomb.springjpasmpl.accout.validator.SignUpFormValidator;
 import com.bomb.springjpasmpl.domain.Account;
 import lombok.RequiredArgsConstructor;
-import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.time.LocalDateTime;
 
 @Controller
 @RequiredArgsConstructor

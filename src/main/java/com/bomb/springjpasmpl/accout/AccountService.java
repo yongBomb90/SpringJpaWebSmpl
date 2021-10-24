@@ -1,9 +1,10 @@
 package com.bomb.springjpasmpl.accout;
 
 
+import com.bomb.springjpasmpl.accout.form.SignUpForm;
 import com.bomb.springjpasmpl.domain.Account;
-import com.bomb.springjpasmpl.settings.Notifications;
-import com.bomb.springjpasmpl.settings.Profile;
+import com.bomb.springjpasmpl.settings.form.Notifications;
+import com.bomb.springjpasmpl.settings.form.Profile;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.mail.SimpleMailMessage;
@@ -101,5 +102,11 @@ public class AccountService implements UserDetailsService {
     public void updateNotifications(Account account, Notifications notifications) {
         modelMapper.map(notifications, account);
         accountRepository.save(account);
+    }
+
+    public void updateNickname(Account account, String nickname) {
+        account.setNickname(nickname);
+        accountRepository.save(account);
+        login(account);
     }
 }

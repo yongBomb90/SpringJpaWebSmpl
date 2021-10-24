@@ -2,7 +2,7 @@ package com.bomb.springjpasmpl;
 
 
 import com.bomb.springjpasmpl.accout.AccountService;
-import com.bomb.springjpasmpl.accout.SignUpForm;
+import com.bomb.springjpasmpl.accout.form.SignUpForm;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;

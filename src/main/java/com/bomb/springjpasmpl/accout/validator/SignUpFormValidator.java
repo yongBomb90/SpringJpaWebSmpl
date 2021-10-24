@@ -1,5 +1,7 @@
-package com.bomb.springjpasmpl.accout;
+package com.bomb.springjpasmpl.accout.validator;
 
+import com.bomb.springjpasmpl.accout.AccountRepository;
+import com.bomb.springjpasmpl.accout.form.SignUpForm;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;

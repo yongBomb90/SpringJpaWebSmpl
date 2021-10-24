@@ -1,5 +1,6 @@
-package com.bomb.springjpasmpl.settings;
+package com.bomb.springjpasmpl.settings.validator;
 
+import com.bomb.springjpasmpl.settings.form.PasswordForm;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 

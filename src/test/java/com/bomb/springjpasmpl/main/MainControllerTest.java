@@ -3,7 +3,7 @@ package com.bomb.springjpasmpl.main;
 
 import com.bomb.springjpasmpl.accout.AccountRepository;
 import com.bomb.springjpasmpl.accout.AccountService;
-import com.bomb.springjpasmpl.accout.SignUpForm;
+import com.bomb.springjpasmpl.accout.form.SignUpForm;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
