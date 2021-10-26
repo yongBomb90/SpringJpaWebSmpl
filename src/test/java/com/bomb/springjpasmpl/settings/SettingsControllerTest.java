@@ -3,13 +3,19 @@ package com.bomb.springjpasmpl.settings;
 
 import com.bomb.springjpasmpl.WithAccount;
 import com.bomb.springjpasmpl.accout.AccountRepository;
+import com.bomb.springjpasmpl.accout.AccountService;
 import com.bomb.springjpasmpl.domain.Account;
+import com.bomb.springjpasmpl.domain.Tag;
+import com.bomb.springjpasmpl.settings.form.TagForm;
+import com.bomb.springjpasmpl.tag.TagRepository;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -29,10 +35,70 @@ class SettingsControllerTest {
     @Autowired
     PasswordEncoder passwordEncoder;
 
+    @Autowired
+    ObjectMapper objectMapper;
+    @Autowired
+    TagRepository tagRepository;
+    @Autowired
+    AccountService accountService;
+
     @AfterEach
     void afterEach() {
         accountRepository.deleteAll();
     }
+
+    @WithAccount("keesun")
+    @DisplayName("계정의 태그 수정 폼")
+    @Test
+    void updateTagsForm() throws Exception {
+        mockMvc.perform(get(SettingsController.SETTINGS_TAGS_URL))
+                .andExpect(view().name(SettingsController.SETTINGS_TAGS_VIEW_NAME))
+                .andExpect(model().attributeExists("account"))
+                .andExpect(model().attributeExists("whitelist"))
+                .andExpect(model().attributeExists("tags"));
+    }
+
+    @WithAccount("keesun")
+    @DisplayName("계정에 태그 추가")
+    @Test
+    void addTag() throws Exception {
+        TagForm tagForm = new TagForm();
+        tagForm.setTagTitle("newTag");
+
+        mockMvc.perform(post(SettingsController.SETTINGS_TAGS_URL + "/add")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(tagForm))
+                        .with(csrf()))
+                .andExpect(status().isOk());
+
+        Tag newTag = tagRepository.findByTitle("newTag");
+        assertNotNull(newTag);
+        Account keesun = accountRepository.findByNickname("keesun");
+        assertTrue(keesun.getTags().contains(newTag));
+    }
+
+    @WithAccount("keesun")
+    @DisplayName("계정에 태그 삭제")
+    @Test
+    void removeTag() throws Exception {
+        Account keesun = accountRepository.findByNickname("keesun");
+        Tag newTag = tagRepository.save(Tag.builder().title("newTag").build());
+        accountService.addTag(keesun, newTag);
+
+        assertTrue(keesun.getTags().contains(newTag));
+
+        TagForm tagForm = new TagForm();
+        tagForm.setTagTitle("newTag");
+
+        mockMvc.perform(post(SettingsController.SETTINGS_TAGS_URL + "/remove")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(tagForm))
+                        .with(csrf()))
+                .andExpect(status().isOk());
+
+        assertFalse(keesun.getTags().contains(newTag));
+    }
+
 
     @WithAccount("keesun")
     @DisplayName("닉네임 수정 폼")
