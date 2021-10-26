@@ -1,7 +1,7 @@
 package com.bomb.springjpasmpl.main;
 
 
-import com.bomb.springjpasmpl.accout.CurrentUser;
+import com.bomb.springjpasmpl.accout.CurrentAccount;
 import com.bomb.springjpasmpl.domain.Account;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class MainController {
 
     @GetMapping("/")
-    public String home(@CurrentUser Account account, Model model) {
+    public String home(@CurrentAccount Account account, Model model) {
         if (account != null) {
             model.addAttribute(account);
         }
