@@ -1,6 +1,7 @@
 package com.bomb.springjpasmpl.settings.form;
 
-import com.studyolle.domain.Zone;
+
+import com.bomb.springjpasmpl.domain.Zone;
 import lombok.Data;
 
 @Data
