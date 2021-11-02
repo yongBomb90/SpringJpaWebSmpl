@@ -1,4 +1,4 @@
-package com.bomb.springjpasmpl.settings.form;
+package com.bomb.springjpasmpl.zone;
 
 
 import com.bomb.springjpasmpl.domain.Zone;

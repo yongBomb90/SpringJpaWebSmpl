@@ -1,4 +1,4 @@
-package com.bomb.springjpasmpl.settings.form;
+package com.bomb.springjpasmpl.tag;
 
 import lombok.Data;
 

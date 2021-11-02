@@ -6,10 +6,16 @@ import com.bomb.springjpasmpl.accout.CurrentAccount;
 import com.bomb.springjpasmpl.domain.Account;
 import com.bomb.springjpasmpl.domain.Tag;
 import com.bomb.springjpasmpl.domain.Zone;
-import com.bomb.springjpasmpl.settings.form.*;
+import com.bomb.springjpasmpl.settings.form.NicknameForm;
+import com.bomb.springjpasmpl.settings.form.Notifications;
+import com.bomb.springjpasmpl.settings.form.PasswordForm;
+import com.bomb.springjpasmpl.settings.form.Profile;
 import com.bomb.springjpasmpl.settings.validator.NicknameValidator;
 import com.bomb.springjpasmpl.settings.validator.PasswordFormValidator;
+import com.bomb.springjpasmpl.tag.TagForm;
 import com.bomb.springjpasmpl.tag.TagRepository;
+import com.bomb.springjpasmpl.tag.TagService;
+import com.bomb.springjpasmpl.zone.ZoneForm;
 import com.bomb.springjpasmpl.zone.ZoneRepository;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -44,6 +50,7 @@ public class SettingsController {
     private final AccountService accountService;
     private final ModelMapper modelMapper;
     private final NicknameValidator nicknameValidator;
+    private final TagService tagService;
     private final TagRepository tagRepository;
     private final ZoneRepository zoneRepository;
     private final ObjectMapper objectMapper;
@@ -134,12 +141,7 @@ public class SettingsController {
     @PostMapping(TAGS + "/add")
     @ResponseBody
     public ResponseEntity addTag(@CurrentAccount Account account, @RequestBody TagForm tagForm) {
-        String title = tagForm.getTagTitle();
-        Tag tag = tagRepository.findByTitle(title);
-        if (tag == null) {
-            tag = tagRepository.save(Tag.builder().title(title).build());
-        }
-
+        Tag tag = tagService.findOrCreateNew(tagForm.getTagTitle());
         accountService.addTag(account, tag);
         return ResponseEntity.ok().build();
     }
