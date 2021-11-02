@@ -32,7 +32,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @AutoConfigureMockMvc
-class SettingsControllerTest{
+class SettingsControllerTest {
 
     @Autowired MockMvc mockMvc;
     @Autowired AccountRepository accountRepository;
@@ -40,8 +40,7 @@ class SettingsControllerTest{
     @Autowired ObjectMapper objectMapper;
     @Autowired TagRepository tagRepository;
     @Autowired AccountService accountService;
-    @Autowired
-    ZoneRepository zoneRepository;
+    @Autowired ZoneRepository zoneRepository;
 
     private Zone testZone = Zone.builder().city("test").localNameOfCity("테스트시").province("테스트주").build();
 
