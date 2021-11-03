@@ -43,9 +43,9 @@ public class Event {
     private Integer limitOfEnrollments;
 
     @OneToMany(mappedBy = "event")
-    private List<com.studyolle.domain.Enrollment> enrollments;
+    private List<Enrollment> enrollments;
 
     @Enumerated(EnumType.STRING)
-    private com.studyolle.domain.EventType eventType;
+    private EventType eventType;
 
 }
