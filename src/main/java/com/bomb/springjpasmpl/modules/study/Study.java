@@ -26,6 +26,9 @@ import java.util.Set;
         @NamedAttributeNode("managers")})
 @NamedEntityGraph(name = "Study.withManagers", attributeNodes = {
         @NamedAttributeNode("managers")})
+@NamedEntityGraph(name = "Study.withTagsAndZones", attributeNodes = {
+        @NamedAttributeNode("tags"),
+        @NamedAttributeNode("zones")})
 @Entity
 @Getter @Setter @EqualsAndHashCode(of = "id")
 @Builder @AllArgsConstructor @NoArgsConstructor
@@ -100,7 +103,6 @@ public class Study {
         return image != null ? image : "/images/default_banner.png";
     }
 
-
     public void publish() {
         if (!this.closed && !this.published) {
             this.published = true;
@@ -155,5 +157,9 @@ public class Study {
 
     public String getEncodedPath() {
         return URLEncoder.encode(this.path, StandardCharsets.UTF_8);
+    }
+
+    public boolean isManagedBy(Account account) {
+        return this.getManagers().contains(account);
     }
 }

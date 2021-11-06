@@ -2,11 +2,13 @@ package com.bomb.springjpasmpl.modules.study;
 
 
 import com.bomb.springjpasmpl.modules.accout.Account;
+import com.bomb.springjpasmpl.modules.study.event.StudyCreatedEvent;
+import com.bomb.springjpasmpl.modules.study.form.StudyDescriptionForm;
 import com.bomb.springjpasmpl.modules.tag.Tag;
 import com.bomb.springjpasmpl.modules.zone.Zone;
-import com.bomb.springjpasmpl.modules.study.form.StudyDescriptionForm;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,10 +18,11 @@ import static com.bomb.springjpasmpl.modules.study.form.StudyForm.VALID_PATH_PAT
 @Service
 @Transactional
 @RequiredArgsConstructor
-public class StudyService {
+public class StudyService{
 
     private final StudyRepository repository;
     private final ModelMapper modelMapper;
+    private final ApplicationEventPublisher eventPublisher;
 
     public Study createNewStudy(Study study, Account account) {
         Study newStudy = repository.save(study);
@@ -72,14 +75,14 @@ public class StudyService {
     }
 
     public Study getStudyToUpdateTag(Account account, String path) {
-        Study study = repository.findStudyWithManagersByPath(path);
+        Study study = repository.findStudyWithTagsByPath(path);
         checkIfExistingStudy(path, study);
         checkIfManager(account, study);
         return study;
     }
 
     public Study getStudyToUpdateZone(Account account, String path) {
-        Study study = repository.findStudyWithManagersByPath(path);
+        Study study = repository.findStudyWithZonesByPath(path);
         checkIfExistingStudy(path, study);
         checkIfManager(account, study);
         return study;
@@ -93,7 +96,7 @@ public class StudyService {
     }
 
     private void checkIfManager(Account account, Study study) {
-        if (!account.isManagerOf(study)) {
+        if (!study.isManagedBy(account)) {
             throw new AccessDeniedException("해당 기능을 사용할 수 없습니다.");
         }
     }
@@ -106,6 +109,7 @@ public class StudyService {
 
     public void publish(Study study) {
         study.publish();
+        this.eventPublisher.publishEvent(new StudyCreatedEvent(study));
     }
 
     public void close(Study study) {
@@ -147,6 +151,7 @@ public class StudyService {
             throw new IllegalArgumentException("스터디를 삭제할 수 없습니다.");
         }
     }
+
     public void addMember(Study study, Account account) {
         study.addMember(account);
     }
