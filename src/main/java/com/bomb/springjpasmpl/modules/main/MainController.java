@@ -2,7 +2,9 @@ package com.bomb.springjpasmpl.modules.main;
 
 
 import com.bomb.springjpasmpl.modules.accout.Account;
+import com.bomb.springjpasmpl.modules.accout.AccountRepository;
 import com.bomb.springjpasmpl.modules.accout.CurrentAccount;
+import com.bomb.springjpasmpl.modules.event.EnrollmentRepository;
 import com.bomb.springjpasmpl.modules.study.Study;
 import com.bomb.springjpasmpl.modules.study.StudyRepository;
 import lombok.RequiredArgsConstructor;
@@ -19,11 +21,23 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class MainController {
 
     private final StudyRepository studyRepository;
+    private final EnrollmentRepository enrollmentRepository;
+    private final AccountRepository accountRepository;
 
     @GetMapping("/")
     public String home(@CurrentAccount Account account, Model model) {
         if (account != null) {
-            model.addAttribute(account);
+            Account accountLoaded = accountRepository.findAccountWithTagsAndZonesById(account.getId());
+            model.addAttribute(accountLoaded);
+            model.addAttribute("enrollmentList", enrollmentRepository.findByAccountAndAcceptedOrderByEnrolledAtDesc(accountLoaded, true));
+            model.addAttribute("studyList", studyRepository.findByAccount(
+                    accountLoaded.getTags(),
+                    accountLoaded.getZones()));
+            model.addAttribute("studyManagerOf",
+                    studyRepository.findFirst5ByManagersContainingAndClosedOrderByPublishedDateTimeDesc(account, false));
+            model.addAttribute("studyMemberOf",
+                    studyRepository.findFirst5ByMembersContainingAndClosedOrderByPublishedDateTimeDesc(account, false));
+            return "index-after-login";
         }
 
         model.addAttribute("studyList", studyRepository.findFirst9ByPublishedAndClosedOrderByPublishedDateTimeDesc(true, false));
