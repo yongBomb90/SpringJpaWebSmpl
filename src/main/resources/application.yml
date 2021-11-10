@@ -1,0 +1,41 @@
+spring:
+  profiles:
+    active: local
+  application:
+    name: wordPrg
+  datasource:
+    driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
+    url: jdbc:log4jdbc:mysql://ec2-3-35-27-135.ap-northeast-2.compute.amazonaws.com:3306/MTBX
+    username: mtbx
+    password: Qwer1234!@#
+    hikari:
+      maximum-pool-size: 10
+      minimum-idle: 2
+  jpa:
+    database-platform: org.hibernate.dialect.MySQL5Dialect
+    hibernate:
+      ddl-auto: validate
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+    show-sql: true
+    database: mysql
+    properties:
+      hibernate:
+        format_sql: true
+logging:
+  level:
+    root: info
+    mysql: error
+    jdbc:
+      sqlonly: info
+      sqltiming: error
+      audit: warn
+      resultset: error
+      resultsettable: error
+      connection: error
+    com:
+      mtbx:
+        prgword: info
+  pattern:
+    console: "%d [%-5level] %-30logger{30}.%M : %msg%n"
+
