@@ -11,7 +11,10 @@ import java.lang.reflect.Method;
 public class CommonViewController {
 
 
-
+    /**
+     * 메인 페이지 접근
+     * @return
+     */
     @GetMapping("/")
     public String main() {
         return "index";
