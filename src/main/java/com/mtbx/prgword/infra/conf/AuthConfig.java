@@ -9,6 +9,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.userdetails.UserDetailsService;
 
 /**
  * 스프링 시큐리티 설정
@@ -19,7 +20,8 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 public class AuthConfig extends WebSecurityConfigurerAdapter {
 
 
-    private  final AuthProp authProp;
+    private final AuthProp authProp;
+    private final UserDetailsService userDetailsService;
 
     /**
      * 시큐리티 빈 등록 및 패턴 설계
@@ -28,9 +30,20 @@ public class AuthConfig extends WebSecurityConfigurerAdapter {
      */
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+        http.csrf().disable();
+        http
+                .formLogin()
+                .loginPage(authProp.getLoginPageUrl()).permitAll()
+                .loginProcessingUrl("/login").permitAll();
+
         http.authorizeRequests()
-                .mvcMatchers("/",authProp.getLoginPageUrl() ).permitAll()
-                .anyRequest().authenticated();
+                .mvcMatchers("/",authProp.getLoginPageUrl(),"/login" ).permitAll()
+                .anyRequest().authenticated()
+               ;
+
+
+
+        http.userDetailsService(userDetailsService);
 
     }
 

@@ -20,4 +20,14 @@ public class CommonViewController {
         return "index";
     }
 
+
+    /**
+     * 메인 페이지 접근
+     * @return
+     */
+    @GetMapping("/loginPage")
+    public String loginPage() {
+        return "loginPage";
+    }
+
 }

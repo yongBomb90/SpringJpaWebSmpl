@@ -44,5 +44,5 @@ logging:
 
 mtbx:
   auth:
-    loginPageUrl: /login
+    loginPageUrl: /loginPage
 ---

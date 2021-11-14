@@ -2,6 +2,7 @@ package com.mtbx.prgword.infra.auth.domain;
 
 
 import lombok.Data;
+import org.modelmapper.ModelMapper;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 
 import javax.persistence.*;
@@ -30,9 +31,16 @@ public class AccountETT {
     @Enumerated(EnumType.STRING)
     private AccType acctype; // 로그인 타입
 
+    @Column(name = "ACC_ROLE" , columnDefinition = "ENUM('ROLE_USER','ROLE_ADMIN') DEFAULT 'ROLE_USER' " , nullable = false)
+    @Enumerated(EnumType.STRING)
+    private AccRole accRole; // 로그인 타입
+
     @Column(name = "DEL_YN" , columnDefinition = "ENUM('Y','N') DEFAULT 'N' " , nullable = false)
     @Enumerated(EnumType.STRING)
     private DelYn delYn; // 삭제여부
+
+    @Column(name = "LAST_ACC_DATE" , columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP" , nullable = false)
+    private LocalDateTime lastAccDate;
 
     @Column(name = "REG_DATE" , columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP" , nullable = false)
     private LocalDateTime regDate;
@@ -41,8 +49,6 @@ public class AccountETT {
     private LocalDateTime udtDate;
 
     // TODO : 멤버 맵핑 필요
-
-
     public enum AccType {
         M, // 계정
         K, // 카카오
@@ -56,6 +62,22 @@ public class AccountETT {
         N   // 사용중
     }
 
+    public enum AccRole {
+        ROLE_USER,  // 삭제
+        ROLE_ADMIN   // 사용중
+    }
+
+    /**
+     * Entity TO UserDetail
+     * @param accountUserDetail
+     * @return
+     */
+    public static AccountETT of(AccountUserDetail accountUserDetail) {
+        if ( accountUserDetail == null) {
+            return null;
+        }
+        return new ModelMapper().map(accountUserDetail, AccountETT.class);
+    }
 
 
 }
