@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;
 
 /***
- * 앱 권한 프로퍼티 상수 
+ * 앱 권한 프로퍼티 상수
  */
 @Data
 @Component
