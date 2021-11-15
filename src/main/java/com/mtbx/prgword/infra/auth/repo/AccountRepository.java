@@ -11,4 +11,5 @@ public interface AccountRepository extends JpaRepository<AccountETT,Long> {
 
     AccountETT getByAccIdEquals(String accId);
 
+
 }

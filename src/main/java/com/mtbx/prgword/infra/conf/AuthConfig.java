@@ -1,6 +1,9 @@
 package com.mtbx.prgword.infra.conf;
 
 
+import com.mtbx.prgword.infra.auth.handler.LoginFailHandler;
+import com.mtbx.prgword.infra.auth.handler.LoginSuccessHandler;
+import com.mtbx.prgword.infra.auth.provider.LoginProvider;
 import com.mtbx.prgword.infra.constant.AuthProp;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
@@ -22,6 +25,9 @@ public class AuthConfig extends WebSecurityConfigurerAdapter {
 
     private final AuthProp authProp;
     private final UserDetailsService userDetailsService;
+    private final LoginFailHandler loginFailHandler;
+    private final LoginSuccessHandler loginSuccessHandler;
+    private final LoginProvider loginProvider;
 
     /**
      * 시큐리티 빈 등록 및 패턴 설계
@@ -30,9 +36,12 @@ public class AuthConfig extends WebSecurityConfigurerAdapter {
      */
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+
         http.csrf().disable();
         http
                 .formLogin()
+                .failureHandler(loginFailHandler)
+                .successHandler(loginSuccessHandler)
                 .loginPage(authProp.getLoginPageUrl()).permitAll()
                 .loginProcessingUrl("/login").permitAll();
 
@@ -44,6 +53,7 @@ public class AuthConfig extends WebSecurityConfigurerAdapter {
 
 
         http.userDetailsService(userDetailsService);
+        //http.authenticationProvider(loginProvider);
 
     }
 

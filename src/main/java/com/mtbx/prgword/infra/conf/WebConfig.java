@@ -8,6 +8,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.security.crypto.factory.PasswordEncoderFactories;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.Properties;
 
@@ -26,6 +28,11 @@ public class WebConfig extends WebMvcAutoConfiguration {
         propertySourcesPlaceholderConfigurer.setProperties(yamlPropertiesFactoryBean.getObject());
         Properties  properties = yamlPropertiesFactoryBean.getObject();
         return properties;
+    }
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return PasswordEncoderFactories.createDelegatingPasswordEncoder();
     }
 
 
