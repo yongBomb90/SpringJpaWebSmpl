@@ -1,9 +1,9 @@
 package com.mtbx.prgword.infra.auth.domain;
 
 
+import com.mtbx.prgword.biz.member.domain.Member;
 import lombok.Data;
 import org.modelmapper.ModelMapper;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -13,8 +13,8 @@ import java.time.LocalDateTime;
  */
 @Data
 @Entity
-@Table(name = "ACCOUNT")
-public class AccountETT {
+@Table(name = "ACCOUNTS")
+public class Account {
 
     @Id
     @Column(name = "SEQ")
@@ -48,6 +48,10 @@ public class AccountETT {
     @Column(name = "UDT_DATE" , columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP" , nullable = false)
     private LocalDateTime udtDate;
 
+    @ManyToOne(targetEntity = Member.class)
+    @JoinColumn(name = "MEM_SEQ")
+    private Member member;
+
     // TODO : 멤버 맵핑 필요
     public enum AccType {
         M, // 계정
@@ -72,11 +76,11 @@ public class AccountETT {
      * @param accountUserDetail
      * @return
      */
-    public static AccountETT of(AccountUserDetail accountUserDetail) {
+    public static Account of(AccountUserDetail accountUserDetail) {
         if ( accountUserDetail == null) {
             return null;
         }
-        return new ModelMapper().map(accountUserDetail, AccountETT.class);
+        return new ModelMapper().map(accountUserDetail, Account.class);
     }
 
 

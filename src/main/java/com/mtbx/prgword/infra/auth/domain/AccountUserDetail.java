@@ -1,6 +1,5 @@
 package com.mtbx.prgword.infra.auth.domain;
 
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -8,7 +7,6 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
@@ -24,9 +22,9 @@ public class AccountUserDetail implements UserDetails {
 
     private String  accSec; // 로그인 비밀번호
 
-    private AccountETT.AccType acctype; // 로그인 타입
+    private Account.AccType acctype; // 로그인 타입
 
-    private AccountETT.AccRole accRole; // 로그인 타입
+    private Account.AccRole accRole; // 로그인 타입
 
     private LocalDateTime lastAccDate;
 
@@ -72,7 +70,7 @@ public class AccountUserDetail implements UserDetails {
      * @param accountETT
      * @return
      */
-    public static AccountUserDetail of(AccountETT accountETT) {
+    public static AccountUserDetail of(Account accountETT) {
         if ( accountETT == null) {
             return null;
         }

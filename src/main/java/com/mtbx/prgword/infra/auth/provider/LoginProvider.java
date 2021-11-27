@@ -1,6 +1,5 @@
 package com.mtbx.prgword.infra.auth.provider;
 
-import com.mtbx.prgword.infra.auth.domain.AccountETT;
 import com.mtbx.prgword.infra.auth.domain.AccountUserDetail;
 import com.mtbx.prgword.infra.auth.service.AccountService;
 import lombok.RequiredArgsConstructor;
@@ -9,7 +8,6 @@ import org.springframework.security.authentication.RememberMeAuthenticationToken
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 

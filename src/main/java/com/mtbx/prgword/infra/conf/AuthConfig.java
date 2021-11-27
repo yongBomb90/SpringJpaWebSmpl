@@ -46,7 +46,7 @@ public class AuthConfig extends WebSecurityConfigurerAdapter {
                 .loginProcessingUrl("/login").permitAll();
 
         http.authorizeRequests()
-                .mvcMatchers("/",authProp.getLoginPageUrl(),"/login" ).permitAll()
+                .mvcMatchers("/",authProp.getLoginPageUrl(),"/login" ,"/member","/member/**").permitAll()
                 .anyRequest().authenticated()
                ;
 

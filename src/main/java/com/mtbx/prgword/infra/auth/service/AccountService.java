@@ -1,6 +1,6 @@
 package com.mtbx.prgword.infra.auth.service;
 
-import com.mtbx.prgword.infra.auth.domain.AccountETT;
+import com.mtbx.prgword.infra.auth.domain.Account;
 import com.mtbx.prgword.infra.auth.domain.AccountUserDetail;
 import com.mtbx.prgword.infra.auth.repo.AccountRepository;
 import lombok.RequiredArgsConstructor;
@@ -20,7 +20,7 @@ public class AccountService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        AccountETT accountETT =  accountRepository.getByAccIdEquals(username);
+        Account accountETT =  accountRepository.getByAccIdEquals(username);
         if ( accountETT == null ) {
             throw new UsernameNotFoundException(username);
         }
