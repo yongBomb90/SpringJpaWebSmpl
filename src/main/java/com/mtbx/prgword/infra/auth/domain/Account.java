@@ -2,7 +2,12 @@ package com.mtbx.prgword.infra.auth.domain;
 
 
 import com.mtbx.prgword.biz.member.domain.Member;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
 import org.modelmapper.ModelMapper;
 
 import javax.persistence.*;
@@ -13,6 +18,11 @@ import java.time.LocalDateTime;
  */
 @Data
 @Entity
+@Builder
+@DynamicInsert
+@DynamicUpdate
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "ACCOUNTS")
 public class Account {
 
@@ -27,25 +37,25 @@ public class Account {
     @Column(name = "ACC_SEC" , nullable = false)
     private String  accSec; // 로그인 비밀번호
 
-    @Column(name = "ACC_TYPE" , columnDefinition = "ENUM('M','A','K','N','F') DEFAULT 'M' " , nullable = false)
+    @Column(name = "ACC_TYPE" , columnDefinition = "ENUM('M','A','K','N','F') DEFAULT 'M' " )
     @Enumerated(EnumType.STRING)
     private AccType acctype; // 로그인 타입
 
-    @Column(name = "ACC_ROLE" , columnDefinition = "ENUM('ROLE_USER','ROLE_ADMIN') DEFAULT 'ROLE_USER' " , nullable = false)
+    @Column(name = "ACC_ROLE" , columnDefinition = "ENUM('ROLE_USER','ROLE_ADMIN') DEFAULT 'ROLE_USER' ")
     @Enumerated(EnumType.STRING)
     private AccRole accRole; // 로그인 타입
 
-    @Column(name = "DEL_YN" , columnDefinition = "ENUM('Y','N') DEFAULT 'N' " , nullable = false)
+    @Column(name = "DEL_YN" , columnDefinition = "ENUM('Y','N') DEFAULT 'N' " )
     @Enumerated(EnumType.STRING)
     private DelYn delYn; // 삭제여부
 
-    @Column(name = "LAST_ACC_DATE" , columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP" , nullable = false)
+    @Column(name = "LAST_ACC_DATE" , columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP" )
     private LocalDateTime lastAccDate;
 
-    @Column(name = "REG_DATE" , columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP" , nullable = false)
+    @Column(name = "REG_DATE" , columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP" )
     private LocalDateTime regDate;
 
-    @Column(name = "UDT_DATE" , columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP" , nullable = false)
+    @Column(name = "UDT_DATE" , columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP" )
     private LocalDateTime udtDate;
 
     @ManyToOne(targetEntity = Member.class)
