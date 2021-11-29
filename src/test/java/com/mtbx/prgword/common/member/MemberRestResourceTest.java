@@ -29,30 +29,30 @@ public class MemberRestResourceTest extends PrgWordTest {
 
 
     /**
-     * TODO : 연관관계 생성
      * @throws Exception
      */
     @Test
     @DisplayName("유저생성")
     void createMemberForm() throws Exception {
+
+        Member member = Member.builder()
+                .memType(Member.MemType.P)
+                .memName("테스트계정").build();
+        member = memberRestResource.save(member);
+
+        /**
+         * 관계의 주인이 ACCOUNT 이기 때문에 멤버가 생성된후 생성되어야한다.
+         */
         Account account = Account.builder()
-                .accId("testI3")
+                .accId("thisIsMe")
                 .accSec("qwer1234")
                 .acctype(Account.AccType.A)
                 .build();
-        accountRepository.save(account);
-        List<Account> accountList = new ArrayList<>();
-        accountList.add(account);
-        Member member = Member.builder()
-                .memType(Member.MemType.P)
-                .memName("테스트계정")
-                .accounts(new ArrayList<Account>(accountList)).build();
-        memberRestResource.save(member);
         account.setMember(member);
         accountRepository.save(account);
 
-
     }
+
 
     
 
