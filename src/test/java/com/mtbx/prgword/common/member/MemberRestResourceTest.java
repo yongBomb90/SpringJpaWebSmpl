@@ -7,9 +7,11 @@ import com.mtbx.prgword.infra.auth.domain.Account;
 import com.mtbx.prgword.infra.auth.repo.AccountRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.modelmapper.internal.util.Assert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.MimeType;
 
 import java.util.ArrayList;
@@ -50,6 +52,32 @@ public class MemberRestResourceTest extends PrgWordTest {
                 .build();
         account.setMember(member);
         accountRepository.save(account);
+
+    }
+
+    /**
+     * @throws Exception
+     */
+    @Test
+    @DisplayName("유저생성 확인")
+    void vallidMemberForm() throws Exception {
+        Member member = memberRestResource.findById(11L).orElseThrow();
+        Account account = member.getAccounts().get(0);
+        Assert.isTrue(account.getAccId().equals("thisIsMe"));
+        Assert.isTrue(member.getMemName().equals("테스트계정"));
+
+    }
+
+
+    /**
+     * @throws Exception
+     */
+    @Test
+    @DisplayName("fetch join 확인")
+    @Transactional
+    void searchLogin() throws Exception {
+        Account account = accountRepository.getByAccIdEqualsWithMember("thisIsMe");
+        Assert.isTrue(account.getAccId().equals("thisIsMe"));
 
     }
 
