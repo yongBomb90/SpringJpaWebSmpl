@@ -69,19 +69,6 @@ public class MemberRestResourceTest extends PrgWordTest {
     }
 
 
-    /**
-     * @throws Exception
-     */
-    @Test
-    @DisplayName("fetch join 확인")
-    @Transactional
-    void searchLogin() throws Exception {
-        Account account = accountRepository.getByAccIdEqualsWithMember("thisIsMe");
-        Assert.isTrue(account.getAccId().equals("thisIsMe"));
-
-    }
-
-
     
 
 }
