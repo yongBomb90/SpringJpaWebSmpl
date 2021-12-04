@@ -10,19 +10,27 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.PagedModel;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
+
 @RequiredArgsConstructor
-@RepositoryRestController
+@RestController
+@RequestMapping(value = "/api/account")
 public class AccountRestController {
 
     private final AccountRepository accountRepository;
 
-
-    @GetMapping("/account")
+    /**
+     * 해당 방식 DTO 방식으로 변경 혹은 RestResouceController 방식 처리 구현
+     * @param pageable
+     * @return
+     */
+    @RequestMapping("/all")
     public @ResponseBody
     CollectionModel<Account> getItems(@PageableDefault Pageable pageable) {
         Page<Account> accountList = accountRepository.findAll(pageable);
