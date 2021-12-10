@@ -17,7 +17,7 @@ public class LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
 
         System.out.println("=========================================");
-        System.out.println("onAuthenticationFailure");
+        System.out.println("onAuthenticationSuccess");
         System.out.println("=========================================");
 
 
